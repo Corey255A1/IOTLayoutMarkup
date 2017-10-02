@@ -37,14 +37,17 @@ boolean dataComplete = false;
 
 void setup() {
   // initialize serial:
-  Serial.begin(57600);
+  Serial.begin(57600, SERIAL_8N1);
 }
 
+String count;
+int cnt;
+char cStr[16];
 void loop() {
-  // print the string when a newline arrives:
-  if (dataComplete) {
-    dataComplete = false;
-  }
+delay(100);
+count = String(cnt++);
+count.toCharArray(cStr,16);
+UpdateCtrl(0, 1, strlen(cStr), cStr);
 }
 
 /*
@@ -64,13 +67,15 @@ void serialEvent() {
         switch(inChar)
         {
           case GET_PAGE: mRxState = RX_GETPAGE; mBytesRemaining = SizeOfGetPage; break;
+          
         }
       }break;
       case RX_GETPAGE:
-      {       
+      {    
+        mRxState = RX_READ;   
         mBytesRemaining=0;
         GetPage(inChar);
-        mRxState = RX_READ;
+        
       }break;
       }
     }
@@ -107,7 +112,7 @@ void GetPage(char pageNum)
   if(pageNum == 0)
   {
     SendCtrl(0, 1, 100, 200, 100, 25, "TEST BUTTON\0");
-    SendCtrl(1, 2, 100, 200, 100, 25, "Read Only Edit\0");
+    SendCtrl(1, 2, 100, 300, 100, 25, "Read Only Edit\0");
     UpdateCtrl(0, 1, 6, "HELLO\0");
     
   }

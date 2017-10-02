@@ -51,7 +51,7 @@ namespace IOTClientWPF
             {
                 while (mCommPort.BytesToRead > 0)
                 {
-                    byte b = (byte)mCommPort.ReadChar();
+                    byte b = (byte)mCommPort.ReadByte();
                     Console.Write(b);
                     switch (mReadState)
                     {

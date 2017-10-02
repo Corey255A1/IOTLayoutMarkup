@@ -43,6 +43,7 @@ namespace IOTClientWPF
         {
             Dispatcher.Invoke(new Action(() =>
             {
+                if (IDsToControls.ContainsKey(ac.ID)) return;
                 switch (ac.Type)
                 {
                     case 1:
